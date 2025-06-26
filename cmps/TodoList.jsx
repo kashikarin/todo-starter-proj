@@ -4,8 +4,6 @@ const {useState} = React
 
 export function TodoList({ todos, onRemoveTodo, onToggleTodo }) {
     const [todoColors, setTodoColors] = useState({})
-    console.log(" todoColors:", todoColors)
-
     function handleColorClick(todoId, idx){
         setTodoColors(prevColors => ({...prevColors, [todoId]: {color: colorPalette[idx]}}))
     }

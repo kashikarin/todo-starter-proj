@@ -10,15 +10,13 @@ const { useState, useEffect } = React
 const { Link, useSearchParams } = ReactRouterDOM
 
 export function TodoIndex() {
-    
     const dispatch = useDispatch()
     const todos = useSelector(state => state.todoModule.todos)
+    const todosStatuses = useSelector(state => state.todoModule.todos.map(todo => todo.isDone))
        
     const isLoading = useSelector(state => state.todoModule.isLoading)
     // Special hook for accessing search-params:
     const [searchParams, setSearchParams] = useSearchParams()
-
-    const defaultFilter = todoService.getFilterFromSearchParams(searchParams)
 
     const filterBy = useSelector(state => state.todoModule.filterBy)
 
@@ -26,8 +24,13 @@ export function TodoIndex() {
         setSearchParams(filterBy)
         loadTodos(filterBy)
             .then(() => showSuccessMsg('Todos loaded successfully'))
-            .catch(err => showErrorMsg('Cannot load todos'))
+            .catch(() => showErrorMsg('Cannot load todos'))
     }, [filterBy])
+
+    useEffect(()=>{
+        loadTodos(filterBy)
+            .catch(()=> showErrorMsg('Failed to load updated todos'))
+    }, [...todosStatuses])
 
     function onRemoveTodo(todoId) {
         removeTodo(todoId)
@@ -38,8 +41,12 @@ export function TodoIndex() {
     function onToggleTodo(todo) {
         const todoToSave = { ...todo, isDone: !todo.isDone }
         updateTodo(todoToSave)
-            .then((savedTodo) => showSuccessMsg(`Todo is ${(savedTodo.isDone)? 'done' : 'back on your list'}`))
-            .catch(err => showErrorMsg('Cannot toggle todo ' + todo._id))
+            .then((savedTodo) => {
+                showSuccessMsg(`Todo is ${(savedTodo.isDone)? 'done' : 'back on your list'}`)
+                
+                console.log('filterBy:', filterBy)
+            })
+            .catch(() => showErrorMsg('Cannot toggle todo ' + todo._id))
     }
 
     function onSetFilterBy(filterObj){
