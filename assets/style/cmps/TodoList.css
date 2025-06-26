@@ -11,5 +11,44 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    background-color: var(--clr1bg);
+    background-image: linear-gradient(to right top, #e2b4bd, #dfb7ac, #d1bca4, #c0c1a7, #b0c4b1);
+}
+
+.color-selection-pallete {
+    display: flex;
+    gap: 5px;
+    align-items: baseline;
+    width: 100%;
+    background-color: var(--clr2bg-light);
+    justify-content: space-evenly;
+    padding: 5px;
+    margin: 10px 5px;
+}
+
+.color {
+    width: 30px;
+    height: 30px;    
+    border-radius: 50%;
+    border: 2px solid var(--gray1);
+    cursor: pointer;
+}
+
+.color1 {
+    background-color: #007991;
+}
+
+.color2 {
+    background-color: #9395D3;
+}
+
+.color3 {
+    background-color: #F2D0A4;
+}
+
+.color4 {
+    background-color: #EA9E8D;
+}
+
+.color5 {
+    background-color: #CE84AD;
 }

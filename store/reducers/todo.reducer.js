@@ -9,7 +9,7 @@ export const UNDO_TODOS = 'UNDO_TODOS'
 //isloading:
 export const SET_ISLOADING = 'SET_ISLOADING'
 //filterBy:
-// export const SET_FILTERBY = 'SET_FILTERBY'
+export const SET_FILTERBY = 'SET_FILTERBY'
 
 
 
@@ -42,6 +42,9 @@ export function todoReducer(state = initialState, cmd){
         case SET_ISLOADING:
             return {...state, 
                     isLoading: cmd.isLoading}
+        case SET_FILTERBY:
+            return {...state,
+                    filterBy: {...cmd.filterBy}}
 
         default: return state
     }

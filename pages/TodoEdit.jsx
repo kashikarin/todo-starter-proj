@@ -3,12 +3,14 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 import { saveTodo } from "../store/actions/todo.actions.js"
 const { useState, useEffect } = React
 const { useNavigate, useParams } = ReactRouterDOM
+const {useSelector} = ReactRedux
 
 export function TodoEdit() {
 
     const [todoToEdit, setTodoToEdit] = useState(todoService.getEmptyTodo())
     const navigate = useNavigate()
     const params = useParams()
+    const isLoading = useSelector(state => state.todoModule.isLoading)
 
     useEffect(() => {
         if (params.todoId) loadTodo()
@@ -50,9 +52,8 @@ export function TodoEdit() {
             })
             .catch(err => showErrorMsg('Cannot save todo'))
     }
-
+    const buttonLoader = <i className="fas fa-spinner"></i>
     const { txt, importance, isDone } = todoToEdit
-
     return (
         <section className="todo-edit">
             <form onSubmit={onSaveTodo} >
@@ -65,8 +66,11 @@ export function TodoEdit() {
                 <label htmlFor="isDone">isDone:</label>
                 <input onChange={handleChange} value={isDone} type="checkbox" name="isDone" id="isDone" />
 
-
-                <button>Save</button>
+                <label>Change color</label>
+                <div classname='change-color-container'>
+                    <div ></div>
+                </div>
+                <button >{isLoading? buttonLoader : "Save"}</button>
             </form>
         </section>
     )
