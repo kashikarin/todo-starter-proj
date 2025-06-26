@@ -32,7 +32,7 @@ function login({ username, password }) {
 } 
 
 function signup({ username, password, fullname }) {
-    const user = { username, password, fullname, balance: 0 }
+    const user = { username, password, fullname, balance: 0, prefs: {color: 'black', bgColor: 'white'}, activities: [] }
     user.createdAt = user.updatedAt = Date.now()
 
     return storageService.post(STORAGE_KEY, user)
@@ -53,7 +53,7 @@ function getLoggedinUser() {
 }
 
 function _setLoggedinUser(user) {
-    const userToSave = { _id: user._id, fullname: user.fullname, balance: user.balance }
+    const userToSave = { _id: user._id, fullname: user.fullname, balance: user.balance, activities: user.activities, prefs: user.prefs }
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN, JSON.stringify(userToSave))
     return userToSave
 }

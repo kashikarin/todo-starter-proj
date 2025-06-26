@@ -12,7 +12,7 @@ import { showErrorMsg } from '../services/event-bus.service.js'
 export function AppHeader() {
     const navigate = useNavigate()
     const user = useSelector(state => state.userModule.loggedInUser)
-    // const [user, setUser] = useState(userService.getLoggedinUser())
+    console.log(" user:", user)
     
     function onLogout() {
         logout()
@@ -21,13 +21,19 @@ export function AppHeader() {
             })
     }
 
+    function getUserPrefs(){
+        if (!user || !user.prefs) return
+        const {color, bgColor} = user.prefs
+        return {color, backgroundColor: bgColor}
+    }
+
     //karin to verify in code review that there is no need for onsetuser
     // function onSetUser(user) {
     //     setUser(user)
     //     navigate('/')
     // }
     return (
-        <header className="app-header full main-layout">
+        <header style={getUserPrefs()} className="app-header full main-layout">
             <section className="header-container">
                 <h1>React Todo App</h1>
                 {user ? (
