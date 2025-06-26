@@ -40,20 +40,21 @@ export function TodoFilter({ filterBy, onSetFilterBy }) {
         <section className="todo-filter">
             <h2>Filter Todos</h2>
             <form onSubmit={onSubmitFilter}>
-                <input value={txt} onChange={handleChange}
-                    type="search" placeholder="By Txt" id="txt" name="txt"
-                />
-                <label htmlFor="importance">Importance: </label>
-                <input value={importance} onChange={handleChange}
-                    type="number" placeholder="By Importance" id="importance" name="importance"
-                />
-                <label htmlFor="status">Status: </label>
-                <select name="isDone" id="status" onChange={handleChange}>
-                    <option value="all">All</option>
-                    <option value="done">Done</option>
-                    <option value="active">Active</option>
-                </select>
-
+                <div className="filter-form-inputs">
+                    <input value={txt} onChange={handleChange}
+                        type="search" placeholder="By Txt" id="txt" name="txt"
+                    />
+                    <label htmlFor="importance">Importance: </label>
+                    <input value={importance} onChange={handleChange}
+                        type="number" placeholder="By Importance" id="importance" name="importance"
+                    />
+                    <label htmlFor="status">Status: </label>
+                    <select name="isDone" id="status" onChange={handleChange}>
+                        <option value="all">All</option>
+                        <option value="done">Done</option>
+                        <option value="active">Active</option>
+                    </select>
+                </div>  
                 <button hidden>Set Filter</button>
             </form>
         </section>

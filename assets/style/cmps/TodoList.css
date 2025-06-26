@@ -11,7 +11,13 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    transition: transform 1s;
+    border-radius: 10px;
     background-image: linear-gradient(to right top, #e2b4bd, #dfb7ac, #d1bca4, #c0c1a7, #b0c4b1);
+}
+
+.todo-list li:hover {
+    transform: scale(1.1);
 }
 
 .color-selection-pallete {

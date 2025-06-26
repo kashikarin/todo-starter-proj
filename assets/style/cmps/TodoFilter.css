@@ -2,5 +2,14 @@
     background-color: var(--clr1bg-light);
     padding: 1em;
     margin: 1em 0;
+    display: flex;
+    flex-direction: column;
 }
+
+.filter-form-inputs {
+    display: flex;
+    gap: 5px;
+}
+
+
 

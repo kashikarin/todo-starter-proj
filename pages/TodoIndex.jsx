@@ -4,6 +4,7 @@ import { DataTable } from "../cmps/data-table/DataTable.jsx"
 import { todoService } from "../services/todo.service.js"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 import { loadTodos, removeTodo, updateTodo } from "../store/actions/todo.actions.js"
+import { updateUser } from "../store/actions/user.actions.js"
 import { SET_FILTERBY, SET_ISLOADING } from "../store/reducers/todo.reducer.js"
 const {useSelector, useDispatch} = ReactRedux
 const { useState, useEffect } = React
@@ -17,7 +18,7 @@ export function TodoIndex() {
     const isLoading = useSelector(state => state.todoModule.isLoading)
     // Special hook for accessing search-params:
     const [searchParams, setSearchParams] = useSearchParams()
-
+    const user = useSelector(state => state.userModule.loggedInUser)
     const filterBy = useSelector(state => state.todoModule.filterBy)
 
     useEffect(() => {
@@ -39,14 +40,23 @@ export function TodoIndex() {
     }
 
     function onToggleTodo(todo) {
-        const todoToSave = { ...todo, isDone: !todo.isDone }
+        let todoToSave = { ...todo, isDone: !todo.isDone }
+        if (todoToSave.isDone) {
+            let updatedUser = incrementUserBalance(user)
+        } 
         updateTodo(todoToSave)
             .then((savedTodo) => {
                 showSuccessMsg(`Todo is ${(savedTodo.isDone)? 'done' : 'back on your list'}`)
-                
-                console.log('filterBy:', filterBy)
             })
             .catch(() => showErrorMsg('Cannot toggle todo ' + todo._id))
+    }
+
+    function incrementUserBalance(user){
+        if (!user) return 
+        let updatedUser = {...user, balance: user.balance + 10}
+        updateUser(updatedUser)
+            .then(()=> showSuccesssg(`${user.fullname}'s balance was increased`))
+            .catch(() => showErrorMsg(`failed to credit ${user.fullname}'s balance`))
     }
 
     function onSetFilterBy(filterObj){
@@ -57,7 +67,7 @@ export function TodoIndex() {
     return (
         <section className="todo-index">
             <TodoFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-            <div>
+            <div style={{marginBottom: '30px'}}>
                 <Link to="/todo/edit" className="btn" >Add Todo</Link>
             </div>
             <h2>Todos List</h2>

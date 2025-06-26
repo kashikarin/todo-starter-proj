@@ -1,4 +1,4 @@
-import { SET_USER } from "../reducers/user.reducer.js"
+import { SET_USER, UPDATE_USER } from "../reducers/user.reducer.js"
 import { store } from "../store.js"
 import { userService } from "../../services/user.service.js"
 
@@ -28,3 +28,13 @@ export function signup(credentials) {
             throw err
          })
 }
+
+export function updateUser(updatedUser) {
+    return userService.updateUser(updatedUser)
+        .then(user => store.dispatch({type: UPDATE_USER, user}))
+        .catch(err => {
+            console.error('user actions => failed to update user', err)
+            throw err
+        })
+}
+
