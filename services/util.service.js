@@ -5,7 +5,8 @@ export const utilService = {
     loadFromStorage,
     saveToStorage,
     animateCSS,
-    elapsedTime
+    elapsedTime,
+    debounce
 }
 
 function makeId(length = 6) {
@@ -75,3 +76,14 @@ function elapsedTime(pastMs) {
     return `${Math.floor(hoursPast / 24)} days ago`
 
 }
+
+function debounce(func, timeout = 1000) {
+    let timer
+    return (...args) => {
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+            func.apply(this, args)
+        }, timeout)
+    }
+}
+
