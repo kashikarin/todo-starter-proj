@@ -32,7 +32,7 @@ function login({ username, password }) {
 } 
 
 function signup({ username, password, fullname }) {
-    const user = { username, password, fullname, balance: 0, prefs: {color: 'black', bgColor: 'white'}, activities: [] }
+    const user = { username, password, fullname, balance: 0, prefs: {color: '', bgColor: ''}, activities: [] }
     user.createdAt = user.updatedAt = Date.now()
 
     return storageService.post(STORAGE_KEY, user)

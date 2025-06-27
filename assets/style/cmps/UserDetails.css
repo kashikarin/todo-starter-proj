@@ -1,0 +1,20 @@
+.user-profile-container {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--clr1);
+    color: var(--gray3);
+    width: 100%;
+
+
+}
+
+.user-profile-container form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+
+.user-profile-container form button {
+
+}

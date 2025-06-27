@@ -2,12 +2,10 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 import { updateUser } from "../store/actions/user.actions.js"
 import { ActivitiesTable } from "../cmps/activities-table/ActivitiesTable.jsx"
 
-// const {useParams} = ReactRouterDOM
 const {useEffect, useState} = React
 const {useSelector} = ReactRedux
 
 export function UserDetails(){
-    // const params = useParams()
     const loggedInUser = useSelector(state => state.userModule.loggedInUser)
     console.log(" loggedInUser:", loggedInUser)
     const [user, setUser] = useState(null)
@@ -49,19 +47,17 @@ export function UserDetails(){
     return(
         <section className="user-profile-container">
             <h3>Profile</h3>
-            <article className="user-profile-details-container">
-                <form onSubmit={onSave}>
-                    <label htmlFor="fullname">Name:</label>    
-                    <input type="text" placeholder='Your name' id='fullname' value={fullname} name='fullname' onChange={handleChange} />
-                    
-                    <label htmlFor="color">Color: </label>
-                    <input type="color" id='color' name='color' value={color} onChange={handleChange}/>
+            <form onSubmit={onSave}>
+                <label htmlFor="fullname">Name:</label>    
+                <input type="text" placeholder='Your name' id='fullname' value={fullname} name='fullname' onChange={handleChange} />
+                
+                <label htmlFor="color">Color: </label>
+                <input type="color" id='color' name='color' value={color} onChange={handleChange}/>
 
-                    <label htmlFor="bgColor">BG Color: </label>
-                    <input type="color" id='bgColor' name='bgColor' value={bgColor} onChange={handleChange}/>
-                    <button>Save</button>
-                </form>
-            </article> 
+                <label htmlFor="bgColor">BG Color: </label>
+                <input type="color" id='bgColor' name='bgColor' value={bgColor} onChange={handleChange}/>
+                <button>Save</button>
+            </form>
             {activities.length ? <ActivitiesTable activities={activities} /> : `No activities are logged for ${fullname}`}
         </section>
     )
