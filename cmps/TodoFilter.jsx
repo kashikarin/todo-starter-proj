@@ -1,10 +1,11 @@
 const { useState, useEffect } = React
+import { useEffectUpdate } from "../custom-hooks/useEffectUpdate.js"
 
 export function TodoFilter({ filterBy, onSetFilterBy }) {
 
     const [filterByToEdit, setFilterByToEdit] = useState({...filterBy})
 
-    useEffect(() => {
+    useEffectUpdate(() => {
         // Notify parent
         onSetFilterBy(filterByToEdit)
     }, [filterByToEdit])

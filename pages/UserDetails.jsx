@@ -1,5 +1,6 @@
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 import { updateUser } from "../store/actions/user.actions.js"
+import { ActivitiesTable } from "../cmps/activities-table/ActivitiesTable.jsx"
 
 // const {useParams} = ReactRouterDOM
 const {useEffect, useState} = React
@@ -8,16 +9,23 @@ const {useSelector} = ReactRedux
 export function UserDetails(){
     // const params = useParams()
     const loggedInUser = useSelector(state => state.userModule.loggedInUser)
+    console.log(" loggedInUser:", loggedInUser)
     const [user, setUser] = useState(null)
+    console.log(" user:", user)
     
     useEffect(()=>{ 
-        if (loggedInUser) {
-            setUser({
-            _id: loggedInUser._id,
+        if (loggedInUser) loadUserData()
+    }, [])
+// 
+    
+    function loadUserData(){
+        setUser({
+            _id: loggedInUser._id, 
             fullname: loggedInUser.fullname,
             color: loggedInUser.prefs.color || 'black',
-            bgColor: loggedInUser.prefs.bgColor || 'white'})           
-    }}, [])
+            bgColor: loggedInUser.prefs.bgColor || 'white',
+            activities: loggedInUser.activities})
+    }
 
     function handleChange({target}) {
         const {name, value} = target
@@ -26,18 +34,18 @@ export function UserDetails(){
 
     function onSave(ev) {
         ev.preventDefault()
-        const {fullname, color, bgColor, _id} = user
+        const {fullname, color, bgColor, _id, activities} = user
         console.log(" user:", user)
         
-        const userToSave = {_id, fullname, prefs: {color, bgColor}}
+        const userToSave = {_id, fullname, prefs: {color, bgColor}, activities}
         
         updateUser(userToSave)
             .then(() => showSuccessMsg('user updated successfully'))
             .catch(()=> showErrorMsg('failed to update the user'))
     }
     if (!user) return
-    const {fullname, color, bgColor} = user
-
+    const {fullname, color, bgColor, activities} = user
+    console.log(user)
     return(
         <section className="user-profile-container">
             <h3>Profile</h3>
@@ -54,6 +62,7 @@ export function UserDetails(){
                     <button>Save</button>
                 </form>
             </article> 
+            {activities.length ? <ActivitiesTable activities={activities} /> : `No activities are logged for ${fullname}`}
         </section>
     )
 }

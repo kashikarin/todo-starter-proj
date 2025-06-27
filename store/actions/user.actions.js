@@ -38,3 +38,17 @@ export function updateUser(updatedUser) {
         })
 }
 
+
+export function addUserActivity(userId, txt){
+    const newActivity = {txt, at: Date.now()}
+    return userService.getById(userId)
+        .then(user => {
+            const updatedUser = {...user, activities: [...user.activities, newActivity]}
+            return userService.updateUser(updatedUser)
+                .then(user => store.dispatch({type: UPDATE_USER, user}))
+                .catch((err) => {
+                    console.error('user actions => Failed to save user activity')
+                    throw err
+        })
+        })
+}

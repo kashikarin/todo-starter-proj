@@ -25,7 +25,10 @@ export function removeTodo(todoId) {
 
 export function updateTodo(todoToSave) {
     return todoService.save(todoToSave)
-        .then((savedTodo) => store.dispatch({type: UPDATE_TODO, todo: savedTodo}))
+        .then((savedTodo) => {
+            store.dispatch({type: UPDATE_TODO, todo: savedTodo})
+            return savedTodo
+        })
         .catch(err => console.log('todo actions => Failed to update todo:', err))
 }
 
