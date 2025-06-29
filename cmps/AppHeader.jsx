@@ -1,6 +1,5 @@
 const { useState } = React
 const { Link, NavLink } = ReactRouterDOM
-const { useNavigate } = ReactRouter
 const {useSelector} = ReactRedux
 import { userService } from '../services/user.service.js'
 import { logout } from '../store/actions/user.actions.js'
@@ -10,15 +9,12 @@ import { showErrorMsg } from '../services/event-bus.service.js'
 
 
 export function AppHeader() {
-    const navigate = useNavigate()
     const user = useSelector(state => state.userModule.loggedInUser)
     console.log(" user:", user)
     
     function onLogout() {
         logout()
-            .catch((err) => {
-                showErrorMsg('OOPs try again')
-            })
+            .catch(() => showErrorMsg('OOPs try again'))
     }
 
     function getUserPrefs(){
@@ -27,11 +23,7 @@ export function AppHeader() {
         return {color, backgroundColor: bgColor}
     }
 
-    //karin to verify in code review that there is no need for onsetuser
-    // function onSetUser(user) {
-    //     setUser(user)
-    //     navigate('/')
-    // }
+
     return (
         <header style={getUserPrefs()} className="app-header full main-layout">
             <section className="header-container">

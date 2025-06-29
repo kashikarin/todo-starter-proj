@@ -1,7 +1,8 @@
 import { todoService } from "../services/todo.service.js"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 import { saveTodo } from "../store/actions/todo.actions.js"
-import { addUserActivity } from "../store/actions/user.actions.js"
+import { userService } from "../services/user.service.js"
+import { addActivity } from "../store/actions/user.actions.js"
 const { useState, useEffect } = React
 const { useNavigate, useParams } = ReactRouterDOM
 const {useSelector} = ReactRedux
@@ -12,7 +13,6 @@ export function TodoEdit() {
     const navigate = useNavigate()
     const params = useParams()
     const isLoading = useSelector(state => state.todoModule.isLoading)
-    const user = useSelector(state => state.userModule.loggedInUser)
 
     useEffect(() => {
         if (params.todoId) loadTodo()
@@ -49,17 +49,19 @@ export function TodoEdit() {
         ev.preventDefault()
         saveTodo(todoToEdit)
             .then((savedTodo) => {
+                
                 navigate('/todo')
-                if (user) {
-                    if (!params.todoId) addUserActivity(user._id, `Added a Todo ${savedTodo.txt}`)
-                    else addUserActivity(user._id, `Edited a Todo ${savedTodo.txt}`)
-                }
+                if (params.todoId) addActivity(`Editted a Todo ${savedTodo.txt}`)
+                else addActivity(`Added a Todo ${savedTodo.txt}`)
                 showSuccessMsg(`Todo Saved (id: ${savedTodo._id})`)
             })
-            .catch(err => showErrorMsg('Cannot save todo'))
+            .catch(() => showErrorMsg('Cannot save todo'))
     }
+
     const buttonLoader = <i className="fas fa-spinner"></i>
     const { txt, importance, isDone } = todoToEdit
+    console.log(" todoToEdit:", todoToEdit)
+    
     return (
         <section className="todo-edit">
             <form onSubmit={onSaveTodo} >

@@ -1,4 +1,4 @@
-import { SET_USER, UPDATE_USER } from "../reducers/user.reducer.js"
+import { SET_USER, SET_USER_BALANCE } from "../reducers/user.reducer.js"
 import { store } from "../store.js"
 import { userService } from "../../services/user.service.js"
 
@@ -31,24 +31,28 @@ export function signup(credentials) {
 
 export function updateUser(updatedUser) {
     return userService.updateUser(updatedUser)
-        .then(user => store.dispatch({type: UPDATE_USER, user}))
+        .then(user => store.dispatch({type: SET_USER, user}))
         .catch(err => {
             console.error('user actions => failed to update user', err)
             throw err
         })
 }
 
-
-export function addUserActivity(userId, txt){
-    const newActivity = {txt, at: Date.now()}
-    return userService.getById(userId)
-        .then(user => {
-            const updatedUser = {...user, activities: [...user.activities, newActivity]}
-            return userService.updateUser(updatedUser)
-                .then(user => store.dispatch({type: UPDATE_USER, user}))
-                .catch((err) => {
-                    console.error('user actions => Failed to save user activity')
-                    throw err
+export function addActivity(txt){
+    return userService.addActivity(txt)
+        .then(user => store.dispatch({type: SET_USER, user}))
+        .catch(err => {
+            console.error('user actions => failed to add activity to the user')
+            throw err
         })
+}
+
+
+export function changeUserBalance(addition){
+    return userService.changeBalance(addition)
+        .then((balance)=> store.dispatch({type: SET_USER_BALANCE, balance}))
+        .catch(err => {
+            console.error('user actions => failed to credit the user for completing activity')
+            throw err
         })
 }

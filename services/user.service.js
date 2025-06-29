@@ -6,6 +6,8 @@ export const userService = {
     login,
     logout,
     updateUser,
+    addActivity,
+    changeBalance,
     signup,
     getById,
     query,
@@ -51,6 +53,48 @@ function updateUser(user){
 function getLoggedinUser() {
     return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN))
 }
+
+function addActivity(txt){
+    const activity = {
+        txt,
+        at: Date.now()
+    }
+   
+    const loggedInUser = getLoggedinUser()
+    if (!loggedInUser) return Promise.reject('no logged in user')
+    return getById(loggedInUser._id)
+        .then(user => {
+            if (!user.activities) user.activities = []
+            user.activities.unshift(activity)
+            return user
+        })
+        .then(userToSave => {
+            return storageService.put(STORAGE_KEY, userToSave)
+                .then(savedUser => {
+                    _setLoggedinUser(savedUser)
+                    return savedUser
+                })})
+                
+}
+
+function changeBalance(addition){
+    const loggedInUser = getLoggedinUser()
+    if (!loggedInUser) return Promise.reject('no logged in user')
+    return getById(loggedInUser._id)
+        .then(user => {
+            user.balance += addition
+            return storageService.put(STORAGE_KEY, user)
+                .then(savedUser => {
+                    _setLoggedinUser(savedUser)
+                    return savedUser.balance
+                })
+        })
+        .catch(err => {
+            console.error('failed to update credit', err)
+            throw err
+        })
+}
+
 
 function _setLoggedinUser(user) {
     const userToSave = { _id: user._id, fullname: user.fullname, balance: user.balance, activities: user.activities, prefs: user.prefs }

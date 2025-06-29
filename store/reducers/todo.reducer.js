@@ -16,6 +16,8 @@ export const SET_FILTERBY = 'SET_FILTERBY'
 const initialState = {
     todos: [],
     lastTodos: [],
+    doneTodos: 0,
+    maxPage: 0,
     isLoading: false,
     filterBy: todoService.getDefaultFilter()
 }

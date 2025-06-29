@@ -18,6 +18,8 @@ export const todoService = {
 window.cs = todoService
 
 function query(filterBy = {}) {
+    console.log(filterBy);
+    
     return storageService.query(TODO_KEY)
         .then(todos => {
             if (filterBy.txt) {
@@ -35,6 +37,14 @@ function query(filterBy = {}) {
 
             if (filterBy.isDone === 'done') {
                 todos = todos.filter(todo => todo.isDone !== false)
+            }
+
+            if (filterBy.sorting === 'text') {
+                todos = todos.sort((a, b) => a.txt.localeCompare(b.txt))
+            }
+
+            if (filterBy.sorting === 'importance') {
+                todos = todos.sort((a, b) =>  b.importance - a.importance)
             }
 
             return todos
@@ -80,6 +90,10 @@ function getFilterFromSearchParams(searchParams) {
         filterBy[field] = searchParams.get(field) || ''
     }
     return filterBy
+}
+
+function setFilterSort(filterSort){
+
 }
 
 //karin to verify in a code review
