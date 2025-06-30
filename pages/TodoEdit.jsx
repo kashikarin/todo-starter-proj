@@ -75,7 +75,7 @@ export function TodoEdit() {
                 <input onChange={handleChange} value={isDone} type="checkbox" name="isDone" id="isDone" />
 
                 <label>Change color</label>
-                <div classname='change-color-container'>
+                <div className='change-color-container'>
                     <div ></div>
                 </div>
                 <button >{isLoading? buttonLoader : "Save"}</button>

@@ -11,7 +11,7 @@ export function Dashboard() {
 
     //why do i need loadtodos if i have a global state?
     useEffect(()=>{
-        if (!todos.length) loadTodos()
+        if (todos.length) loadTodos()
             .catch(() => showErrorMsg('Failed to load todos'))
         todoService.getImportanceStats()
             .then(setImportanceStats)
@@ -21,7 +21,7 @@ export function Dashboard() {
     return (
         <section className="dashboard">
             <h1>Dashboard</h1>
-            <h2>Statistics for {todos.length} Todos</h2>
+            {todos ? <h2>Statistics for {todos.length} Todos</h2> : "No todos were loaded"}
             <hr />
             <h4>By Importance</h4>
             <Chart data={importanceStats}/>

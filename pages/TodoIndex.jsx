@@ -33,19 +33,11 @@ export function TodoIndex() {
             .catch(() => showErrorMsg('Cannot load todos'))
     }, [filterBy])
 
-    // useEffect(()=>{
-    //     loadTodos(filterBy)
-    //         .catch(()=> showErrorMsg('Failed to load updated todos'))
-    // }, [...todosStatuses])
 
     function onRemoveTodo(todoId) {
-        const removedTodo = todos.find(todo => todo._id === todoId)
-        console.log(" removedTodo:", removedTodo)
+        if (!confirm(`Are you sure you wish to delete todo #${todoId}?`)) return
         removeTodo(todoId)
-            .then(() => {
-                if (user) addActivity(`Removed a Todo ${removedTodo.txt}`)
-                showSuccessMsg(`Todo removed`)
-            })
+            .then(() => showSuccessMsg(`Todo removed`))
             .catch(() => showErrorMsg('Cannot remove todo ' + todoId))
     }
 
@@ -54,7 +46,10 @@ export function TodoIndex() {
         if (!loggedInUser) return
         try {
             let savedTodo = await saveTodo(todoToSave)
-            if (savedTodo.isDone) await changeUserBalance(10)
+            if (savedTodo.isDone) {
+                await changeUserBalance(10)
+                await addActivity(`Complete activity ${savedTodo.txt}`)
+            } 
             showSuccessMsg(`Todo is ${(savedTodo.isDone)? 'done' : 'back on your list'}`)
         } catch(err) {
             showErrorMsg('Cannot toggle todo ' + todo._id)
@@ -65,7 +60,7 @@ export function TodoIndex() {
         dispatch({type: SET_FILTERBY, filterBy: {...filterObj}})
     }
 
-    const loader = <i style={{fontSize: 100, marginBottom: '50px'}}class="fas fa-cog fa-spin"></i>
+    const loader = <i style={{fontSize: 100, marginBottom: '50px'}} className="fas fa-cog fa-spin"></i>
     return (
         <section className="todo-index">
             <TodoFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />

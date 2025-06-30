@@ -2,6 +2,9 @@
     background-color: var(--clr2bg);
     color: var(--clr2bg-light);
     padding-block: 1em;
+    position: sticky;
+    top: 0;
+    left: 0;
 
 }
 
@@ -41,3 +44,4 @@ a.active {
         color: var(--clr2bg-light);
     }
 }
+

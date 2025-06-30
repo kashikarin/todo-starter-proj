@@ -11,7 +11,7 @@ export function TodoList({ todos, onRemoveTodo, onToggleTodo }) {
     const colorPalette = ['#007991', '#9395D3', '#F2D0A4', '#EA9E8D', '#CE84AD'];
     return (
         <ul className="todo-list">
-            {todos.length === 0? 'No todos to show' : todos.map(todo => (<li key={todo._id} style={{backgroundColor: todoColors[todo._id]? todoColors[todo._id].color : 'transparent', backgroundImage: todoColors[todo._id] ? 'none' : undefined}}>
+            {!todos || todos.length === 0? 'No todos to show' : todos.map(todo => (<li key={todo._id} style={{backgroundColor: todoColors[todo._id]? todoColors[todo._id].color : 'transparent', backgroundImage: todoColors[todo._id] ? 'none' : undefined}}>
                         
                     <TodoPreview todo={todo} onToggleTodo={()=>onToggleTodo(todo)} />
                     <section>

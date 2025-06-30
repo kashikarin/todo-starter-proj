@@ -12,7 +12,7 @@ export function DataTable({ todos, onRemoveTodo }) {
             </tr>
         </thead>
         <tbody>
-            {todos.map(todo =>
+            {todos && todos.map(todo =>
                 <DataTableRow key={todo._id} todo={todo} onRemoveTodo={onRemoveTodo} />)}
         </tbody>
     </table>

@@ -5,9 +5,9 @@ export const userService = {
     getLoggedinUser,
     login,
     logout,
-    updateUser,
     addActivity,
     changeBalance,
+    updateUserPrefs,
     signup,
     getById,
     query,
@@ -46,9 +46,6 @@ function logout() {
     return Promise.resolve()
 }
 
-function updateUser(user){
-    return storageService.put(STORAGE_KEY, user)
-}
 
 function getLoggedinUser() {
     return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN))
@@ -95,6 +92,23 @@ function changeBalance(addition){
         })
 }
 
+function updateUserPrefs(userToUpdate){
+    const loggedInUser = getLoggedinUser()
+    if (!loggedInUser) return Promise.reject('no logged in user')
+    return getById(loggedInUser._id)
+        .then(user => {
+            user = {...user, ...userToUpdate}
+            return storageService.put(STORAGE_KEY, user)
+                .then(savedUser => {
+                    _setLoggedinUser(savedUser)
+                    return savedUser
+                })
+        })
+        .catch(err => {
+            console.error('failed to update color preferences', err)
+            throw err
+        })
+}
 
 function _setLoggedinUser(user) {
     const userToSave = { _id: user._id, fullname: user.fullname, balance: user.balance, activities: user.activities, prefs: user.prefs }

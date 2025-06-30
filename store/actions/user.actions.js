@@ -29,8 +29,8 @@ export function signup(credentials) {
          })
 }
 
-export function updateUser(updatedUser) {
-    return userService.updateUser(updatedUser)
+export function updateUser(userToUpdate) {
+    return userService.updateUserPrefs(userToUpdate)
         .then(user => store.dispatch({type: SET_USER, user}))
         .catch(err => {
             console.error('user actions => failed to update user', err)
@@ -56,3 +56,4 @@ export function changeUserBalance(addition){
             throw err
         })
 }
+

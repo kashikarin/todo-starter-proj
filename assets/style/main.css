@@ -10,6 +10,7 @@
 
 /* Components */
 @import "cmps/AppHeader.css";
+@import "cmps/AppFooter.css";
 @import "cmps/UserMsg.css";
 @import "cmps/ToggleButton.css";
 @import "cmps/Chart.css";
@@ -24,5 +25,6 @@
 @import "cmps/TodoEdit.css";
 @import "cmps/UserDetails.css";
 @import "cmps/TodoSort.css";
+@import "cmps/DoneRateProgressBar.css";
 
 

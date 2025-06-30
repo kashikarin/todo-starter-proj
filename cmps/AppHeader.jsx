@@ -1,16 +1,15 @@
 const { useState } = React
 const { Link, NavLink } = ReactRouterDOM
 const {useSelector} = ReactRedux
-import { userService } from '../services/user.service.js'
 import { logout } from '../store/actions/user.actions.js'
 import { UserMsg } from "./UserMsg.jsx"
 import { LoginSignup } from './LoginSignup.jsx'
 import { showErrorMsg } from '../services/event-bus.service.js'
+import { DoneRateProgressBar } from './DoneRateProgressBar.jsx'
 
 
 export function AppHeader() {
     const user = useSelector(state => state.userModule.loggedInUser)
-    console.log(" user:", user)
     
     function onLogout() {
         logout()
@@ -22,7 +21,6 @@ export function AppHeader() {
         const {color, bgColor} = user.prefs
         return {color, backgroundColor: bgColor}
     }
-
 
     return (
         <header style={getUserPrefs()} className="app-header full main-layout">
@@ -40,6 +38,7 @@ export function AppHeader() {
                         <LoginSignup  />
                     </section>
                 )}
+                {user && <DoneRateProgressBar />}
                 <nav className="app-nav">
                     <NavLink to="/" >Home</NavLink>
                     <NavLink to="/about" >About</NavLink>

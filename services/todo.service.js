@@ -2,6 +2,7 @@ import { utilService } from './util.service.js'
 import { storageService } from './async-storage.service.js'
 
 const TODO_KEY = 'todoDB'
+// const PAGE_SIZE = 3
 _createTodos()
 
 export const todoService = {
@@ -17,9 +18,7 @@ export const todoService = {
 // For Debug (easy access from console):
 window.cs = todoService
 
-function query(filterBy = {}) {
-    console.log(filterBy);
-    
+function query(filterBy = {}) {   
     return storageService.query(TODO_KEY)
         .then(todos => {
             if (filterBy.txt) {
@@ -46,7 +45,6 @@ function query(filterBy = {}) {
             if (filterBy.sorting === 'importance') {
                 todos = todos.sort((a, b) =>  b.importance - a.importance)
             }
-
             return todos
         })
 }

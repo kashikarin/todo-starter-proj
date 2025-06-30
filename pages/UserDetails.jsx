@@ -33,10 +33,7 @@ export function UserDetails(){
     function onSave(ev) {
         ev.preventDefault()
         const {fullname, color, bgColor, _id, activities} = user
-        console.log(" user:", user)
-        
-        const userToSave = {_id, fullname, prefs: {color, bgColor}, activities}
-        
+        const userToSave = {_id, fullname, prefs: {color, bgColor}, activities} 
         updateUser(userToSave)
             .then(() => showSuccessMsg('user updated successfully'))
             .catch(()=> showErrorMsg('failed to update the user'))
@@ -46,19 +43,23 @@ export function UserDetails(){
     console.log(user)
     return(
         <section className="user-profile-container">
-            <h3>Profile</h3>
-            <form onSubmit={onSave}>
-                <label htmlFor="fullname">Name:</label>    
-                <input type="text" placeholder='Your name' id='fullname' value={fullname} name='fullname' onChange={handleChange} />
-                
-                <label htmlFor="color">Color: </label>
-                <input type="color" id='color' name='color' value={color} onChange={handleChange}/>
+            <article className="profile-container">
+                <h3>Profile</h3>
+                <form onSubmit={onSave}>
+                    <label htmlFor="fullname">Name:</label>    
+                    <input type="text" placeholder='Your name' id='fullname' value={fullname} name='fullname' onChange={handleChange} />
+                    
+                    <label htmlFor="color">Color: </label>
+                    <input type="color" id='color' name='color' value={color} onChange={handleChange}/>
 
-                <label htmlFor="bgColor">BG Color: </label>
-                <input type="color" id='bgColor' name='bgColor' value={bgColor} onChange={handleChange}/>
-                <button>Save</button>
-            </form>
-            {activities.length ? <ActivitiesTable activities={activities} /> : `No activities are logged for ${fullname}`}
+                    <label htmlFor="bgColor">BG Color: </label>
+                    <input type="color" id='bgColor' name='bgColor' value={bgColor} onChange={handleChange}/>
+                    <button>Save</button>
+                </form>
+            </article>
+            <article className="activities-table">
+                {activities.length ? <ActivitiesTable activities={activities} /> : `No activities are logged for ${fullname}`}
+            </article>
         </section>
     )
 }

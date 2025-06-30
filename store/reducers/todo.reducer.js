@@ -2,6 +2,8 @@ import { todoService } from "../../services/todo.service.js"
 
 //todos
 export const SET_TODOS = 'SET_TODOS'
+export const SET_DONE_TODOS_PERCENT = 'SET_DONE_TODOS_PERCENT'
+export const SET_MAX_PAGE = 'SET_MAX_PAGE'
 export const REMOVE_TODO = 'REMOVE_TODO'
 export const ADD_TODO = 'ADD_TODO'
 export const UPDATE_TODO = 'UPDATE_TODO'
@@ -16,8 +18,8 @@ export const SET_FILTERBY = 'SET_FILTERBY'
 const initialState = {
     todos: [],
     lastTodos: [],
-    doneTodos: 0,
-    maxPage: 0,
+    // doneTodos: 0,
+    // maxPage: 0,
     isLoading: false,
     filterBy: todoService.getDefaultFilter()
 }
