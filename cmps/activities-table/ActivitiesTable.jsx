@@ -1,8 +1,7 @@
 import { utilService } from "../../services/util.service.js";
 
 export function ActivitiesTable({activities}){
-        console.log(activities);
-        
+       
         return (<table border="1" className="data-table">
             <thead>
                 <tr>

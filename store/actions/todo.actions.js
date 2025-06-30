@@ -3,9 +3,9 @@ import { SET_TODOS, REMOVE_TODO, ADD_TODO, UPDATE_TODO, SET_ISLOADING, SET_DONE_
 import { store } from "../store.js"
 import { addActivity } from "./user.actions.js"
 
-export function loadTodos(filterBy){
+export function loadTodos(filterSort){
     store.dispatch({type: SET_ISLOADING, isLoading: true})
-    return todoService.query(filterBy)
+    return todoService.query(filterSort)
         .then((todos) => store.dispatch({type: SET_TODOS, todos}))
         .catch(err => {
             console.error('todo actions => Failed to load todos', err)

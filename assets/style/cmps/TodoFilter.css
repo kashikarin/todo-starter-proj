@@ -12,4 +12,8 @@
 }
 
 
+.todo-filter form button {
+    margin-block-start: 15px;
+    margin-inline-start: 0;
+}
 

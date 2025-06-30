@@ -18,31 +18,31 @@ export const todoService = {
 // For Debug (easy access from console):
 window.cs = todoService
 
-function query(filterBy = {}) {   
+function query(filterSort = {}) {   
     return storageService.query(TODO_KEY)
         .then(todos => {
-            if (filterBy.txt) {
-                const regExp = new RegExp(filterBy.txt, 'i')
+            if (filterSort.txt) {
+                const regExp = new RegExp(filterSort.txt, 'i')
                 todos = todos.filter(todo => regExp.test(todo.txt))
             }
 
-            if (filterBy.importance) {
-                todos = todos.filter(todo => todo.importance >= filterBy.importance)
+            if (filterSort.importance) {
+                todos = todos.filter(todo => todo.importance >= filterSort.importance)
             }
 
-            if (filterBy.isDone === 'active') {
+            if (filterSort.isDone === 'active') {
                 todos = todos.filter(todo => todo.isDone !== true)
             }
 
-            if (filterBy.isDone === 'done') {
+            if (filterSort.isDone === 'done') {
                 todos = todos.filter(todo => todo.isDone !== false)
             }
 
-            if (filterBy.sorting === 'text') {
+            if (filterSort.sorting === 'text') {
                 todos = todos.sort((a, b) => a.txt.localeCompare(b.txt))
             }
 
-            if (filterBy.sorting === 'importance') {
+            if (filterSort.sorting === 'importance') {
                 todos = todos.sort((a, b) =>  b.importance - a.importance)
             }
             return todos
@@ -83,16 +83,13 @@ function getDefaultFilter() {
 
 function getFilterFromSearchParams(searchParams) {
     const defaultFilter = getDefaultFilter()
-    const filterBy = {}
+    const filterSort = {}
     for (const field in defaultFilter) {
-        filterBy[field] = searchParams.get(field) || ''
+        filterSort[field] = searchParams.get(field) || ''
     }
-    return filterBy
+    return filterSort
 }
 
-function setFilterSort(filterSort){
-
-}
 
 //karin to verify in a code review
 function getImportanceStats() {

@@ -1,11 +1,11 @@
 
 const {useState, useEffect} = React
 
-export function TodoSort({onSetFilterBy}){
+export function TodoSort({onSetFilterSort}){
     const [sorting, setSorting] = useState({sorting: ""})
 
     useEffect(()=>{
-        onSetFilterBy(sorting)
+        onSetFilterSort(sorting)
     }, [sorting])
 
 

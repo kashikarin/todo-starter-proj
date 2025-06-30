@@ -1,15 +1,16 @@
 const { useState, useEffect, useRef } = React
 import { useEffectUpdate } from "../custom-hooks/useEffectUpdate.js"
 import { utilService } from "../services/util.service.js"
+import { todoService } from "../services/todo.service.js"
 
-export function TodoFilter({ filterBy, onSetFilterBy }) {
-    const debouncedOnSetFilterBy = useRef(utilService.debounce(onSetFilterBy)).current
-    const [filterByToEdit, setFilterByToEdit] = useState({...filterBy})
+export function TodoFilter({ filterSort, onSetFilterSort }) {
+    const debouncedOnSetFilterSort = useRef(utilService.debounce(onSetFilterSort)).current
+    const [filterSortToEdit, setFilterSortToEdit] = useState({...filterSort})
 
     useEffectUpdate(() => {
         // Notify parent
-        debouncedOnSetFilterBy(filterByToEdit)
-    }, [filterByToEdit])
+        debouncedOnSetFilterSort(filterSortToEdit)
+    }, [filterSortToEdit])
 
     function handleChange({ target }) {
         const field = target.name
@@ -28,16 +29,16 @@ export function TodoFilter({ filterBy, onSetFilterBy }) {
             default: break
         }
 
-        setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
+        setFilterSortToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
     }
 
     // Optional support for LAZY Filtering with a button
     function onSubmitFilter(ev) {
         ev.preventDefault()
-        onSetFilterBy(filterByToEdit)
+        onSetFilterSort(filterSortToEdit)
     }
 
-    const { txt, importance } = filterByToEdit
+    const { txt, importance } = filterSortToEdit
     return (
         <section className="todo-filter">
             <h2>Filter Todos</h2>
@@ -58,6 +59,7 @@ export function TodoFilter({ filterBy, onSetFilterBy }) {
                     </select>
                 </div>  
                 <button hidden>Set Filter</button>
+                <button onClick={()=>setFilterSortToEdit(todoService.getDefaultFilter())}>Reset Filter and Sort</button>
             </form>
         </section>
     )

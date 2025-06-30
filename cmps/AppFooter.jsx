@@ -1,5 +1,6 @@
 import { DoneRateProgressBar } from "./DoneRateProgressBar.jsx"
 const {useSelector} = ReactRedux
+
 export function AppFooter() {
         const user = useSelector(state => state.userModule.loggedInUser)
 
@@ -10,7 +11,7 @@ export function AppFooter() {
     }
 
     return (
-        <header style={getUserPrefs()} className="app-footer full main-layout">
+        <header style={getUserPrefs()} className="app-footer">
             <div className="footer-progress-bar-container">
                { user && <DoneRateProgressBar />} 
             </div>

@@ -5,7 +5,7 @@ import { todoService } from "../services/todo.service.js"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 import { loadTodos, removeTodo, saveTodo } from "../store/actions/todo.actions.js"
 import { changeUserBalance, addActivity } from "../store/actions/user.actions.js"
-import { SET_FILTERBY } from "../store/reducers/todo.reducer.js"
+import { SET_FILTERSORT } from "../store/reducers/todo.reducer.js"
 import { TodoSort } from "../cmps/TodoSort.jsx"
 const {useSelector, useDispatch} = ReactRedux
 const { useEffect } = React
@@ -18,20 +18,19 @@ export function TodoIndex() {
     const isLoading = useSelector(state => state.todoModule.isLoading)
     // Special hook for accessing search-params:
     const [searchParams, setSearchParams] = useSearchParams()
-    const defaultFilter = todoService.getFilterFromSearchParams(searchParams)
-    const user = useSelector(state => state.userModule.loggedInUser)
-    const filterBy = useSelector(state => state.todoModule.filterBy)
+    const defaultFilterSort = todoService.getFilterFromSearchParams(searchParams)
+    const filterSort = useSelector(state => state.todoModule.filterSort)
 
     useEffect(()=>{
-        onSetFilterBy(defaultFilter)
+        onSetFilterSort(defaultFilterSort)
     }, [])
 
     useEffect(() => {
-        setSearchParams(filterBy)
-        loadTodos(filterBy)
+        setSearchParams(filterSort)
+        loadTodos(filterSort)
             .then(() => showSuccessMsg('Todos loaded successfully'))
             .catch(() => showErrorMsg('Cannot load todos'))
-    }, [filterBy])
+    }, [filterSort])
 
 
     function onRemoveTodo(todoId) {
@@ -56,15 +55,15 @@ export function TodoIndex() {
         }
     }
 
-    function onSetFilterBy(filterObj){
-        dispatch({type: SET_FILTERBY, filterBy: {...filterObj}})
+    function onSetFilterSort(filterObj){
+        dispatch({type: SET_FILTERSORT, filterSort: {...filterObj}})
     }
 
     const loader = <i style={{fontSize: 100, marginBottom: '50px'}} className="fas fa-cog fa-spin"></i>
     return (
         <section className="todo-index">
-            <TodoFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-            <TodoSort onSetFilterBy={onSetFilterBy}/>
+            <TodoFilter filterSort={filterSort} onSetFilterSort={onSetFilterSort} />
+            <TodoSort onSetFilterSort={onSetFilterSort}/>
             <div style={{marginBottom: '30px', marginTop: '30px'}}>
                 <Link to="/todo/edit" className="btn" >Add Todo</Link>
             </div>

@@ -1,6 +1,8 @@
 .todos-done-precentage-container {
     display: flex;
     flex-direction: column;
+    gap: 5px;
+
 }
 
 .todos-progessbar-container {
