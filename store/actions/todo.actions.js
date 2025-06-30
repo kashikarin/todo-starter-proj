@@ -43,7 +43,3 @@ export function saveTodo(todoToSave) {
     
 }
 
-// export function _setTodosData(doneTodosPercent, maxPage){
-//     store.dispatch({type: SET_DONE_TODOS_PERCENT, doneTodosPercent})
-//     store.dispatch({type: SET_MAX_PAGE, maxPage})
-// }

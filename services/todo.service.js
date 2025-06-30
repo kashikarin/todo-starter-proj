@@ -91,7 +91,6 @@ function getFilterFromSearchParams(searchParams) {
 }
 
 
-//karin to verify in a code review
 function getImportanceStats() {
     return storageService.query(TODO_KEY)
         .then(todos => {

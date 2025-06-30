@@ -32,17 +32,13 @@ export function TodoFilter({ filterSort, onSetFilterSort }) {
         setFilterSortToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
     }
 
-    // Optional support for LAZY Filtering with a button
-    function onSubmitFilter(ev) {
-        ev.preventDefault()
-        onSetFilterSort(filterSortToEdit)
-    }
+
 
     const { txt, importance } = filterSortToEdit
     return (
         <section className="todo-filter">
             <h2>Filter Todos</h2>
-            <form onSubmit={onSubmitFilter}>
+            <form>
                 <div className="filter-form-inputs">
                     <input value={txt} onChange={handleChange}
                         type="search" placeholder="By Txt" id="txt" name="txt"

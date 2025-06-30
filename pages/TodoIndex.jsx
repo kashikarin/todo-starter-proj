@@ -16,7 +16,6 @@ export function TodoIndex() {
     const todos = useSelector(state => state.todoModule.todos)
     const loggedInUser = useSelector(state => state.userModule.loggedInUser)
     const isLoading = useSelector(state => state.todoModule.isLoading)
-    // Special hook for accessing search-params:
     const [searchParams, setSearchParams] = useSearchParams()
     const defaultFilterSort = todoService.getFilterFromSearchParams(searchParams)
     const filterSort = useSelector(state => state.todoModule.filterSort)

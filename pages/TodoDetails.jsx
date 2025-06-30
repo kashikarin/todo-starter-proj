@@ -26,7 +26,6 @@ export function TodoDetails() {
     }
 
     function onBack() {
-        // If nothing to do here, better use a Link
         navigate('/todo')
         // navigate(-1)
     }
